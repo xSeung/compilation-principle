@@ -7,5 +7,4 @@ auto main(int argc, char **argv) -> int {
   a.read_k("./k_table");
   a.read_p("./p_table");
   a.analyse(argv[argc - 1]);
-  // a.analyse(argv[1]);
 }
