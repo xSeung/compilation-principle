@@ -37,7 +37,7 @@ auto Analyser::read_k(const char *p) -> void {
   try {
     std::string temp;
     while (this->readline(p, temp)) {
-      std::regex r(R"((.+)( *, *)(\d+))");
+      std::regex r(R"(([a-z\*&]+)( *, *)(\d+))");
       std::smatch sm;
       std::regex_match(temp, sm, r);
       this->k.insert({sm[1], std::stoi(sm[3])});
@@ -52,7 +52,7 @@ auto Analyser::read_p(const char *p) -> void {
   try {
     std::string temp;
     while (this->readline(p, temp)) {
-      std::regex r(R"((.+)( *, *)(\d+))");
+      std::regex r(R"((.)( *, *)(\d+))");
       std::smatch sm;
       std::regex_match(temp, sm, r);
       this->p.insert({sm[1], std::stoi(sm[3])});
@@ -113,6 +113,7 @@ auto Analyser::sub_program2(std::string::iterator &iter,
   for (auto e : temp) {
     if (this->is_character(e)) {
       error = true;
+      break;
     }
   }
   if (error) {
@@ -154,7 +155,6 @@ auto Analyser::sub_program3(std::string::iterator &iter,
     }
     return {temp, {"", 0}};
   }
-  // std::cout << std::string(1, *iter);
   if ((pos = this->p.find(std::string(1, *iter))) != this->p.end()) {
     iter++;
     return {pos->first, {"delimiter", pos->second}};

@@ -8,15 +8,13 @@ class Analyser;
 class Analyser {
 private:
   std::ifstream in;
-  std::map<std::string, int> k; //关键字表
-  std::map<std::string, int> p; //分界符表
-  std::map<std::string, int> c; //常量表
-  std::map<std::string, int> i; //标识符表
+  std::map<std::string, int> k;             //关键字表
+  std::map<std::string, int> p;             //分界符表
+  std::map<std::string, int> c;             //常量表
+  std::map<std::string, int> i;             //标识符表
   std::map<std::string, int> const arit = { //算术运算符表
-      {"+", 1},   {"-", 2},  {"*", 3},  {"/", 4},  {"++", 5},
-      {"==", 6},  {"+=", 7}, {"-=", 8}, {"*=", 9}, {"/=", 10},
-      {"--", 11}, {"=", 12}
-  };
+      {"+", 1},  {"-", 2},  {"*", 3},  {"/", 4},   {"++", 5},  {"==", 6},
+      {"+=", 7}, {"-=", 8}, {"*=", 9}, {"/=", 10}, {"--", 11}, {"=", 12}};
   std::map<std::string, int> const rela = { //关系运算符表
       {">", 1},
       {"<", 2},
@@ -54,6 +52,7 @@ private:
   */
   auto sub_program3(std::string::iterator &iter, std::string::iterator &end)
       -> std::pair<std::string, std::pair<std::string, int>>;
+
 public:
   Analyser() = default;
   //读k表
