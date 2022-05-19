@@ -8,57 +8,57 @@ class Analyser;
 class Analyser {
 private:
   std::ifstream in;
-  std::map<std::string, int> k;             //å…³é”®å­—è¡¨
-  std::map<std::string, int> p;             //åˆ†ç•Œç¬¦è¡¨
-  std::map<std::string, int> c;             //å¸¸é‡è¡¨
-  std::map<std::string, int> i;             //æ ‡è¯†ç¬¦è¡¨
-  std::map<std::string, int> const arit = { //ç®—æœ¯è¿ç®—ç¬¦è¡¨
+  std::map<std::string, int> k;             //¹Ø¼ü×Ö±í
+  std::map<std::string, int> p;             //·Ö½ç·û±í
+  std::map<std::string, int> c;             //³£Á¿±í
+  std::map<std::string, int> i;             //±êÊ¶·û±í
+  std::map<std::string, int> const arit = { //ËãÊõÔËËã·û±í
       {"+", 1},  {"-", 2},  {"*", 3},  {"/", 4},   {"++", 5},  {"==", 6},
       {"+=", 7}, {"-=", 8}, {"*=", 9}, {"/=", 10}, {"--", 11}, {"=", 12}};
-  std::map<std::string, int> const rela = { //å…³ç³»è¿ç®—ç¬¦è¡¨
+  std::map<std::string, int> const rela = { //¹ØÏµÔËËã·û±í
       {">", 1},
       {"<", 2},
       {">=", 3},
       {"<=", 4},
       {"==", 5}};
-  /*é€è¡Œè¯»æ–‡ä»¶
-  è¾“å…¥ï¼špæ–‡ä»¶åœ°å€ï¼Œstrè¯»å‡ºå­˜æ”¾
-  è¿”å›å€¼ï¼šä»£è¡¨æ–‡ä»¶æœ‰æ²¡æœ‰è¯»æˆåŠŸ
+  /*ÖğĞĞ¶ÁÎÄ¼ş
+  ÊäÈë£ºpÎÄ¼şµØÖ·£¬str¶Á³ö´æ·Å
+  ·µ»ØÖµ£º´ú±íÎÄ¼şÓĞÃ»ÓĞ¶Á³É¹¦
   */
   auto readline(char const *p, std::string &str) -> bool;
   auto is_number(char c) -> bool;
   auto is_character(char c) -> bool;
   /*
-  è¾“å…¥ï¼š
-    å­—ç¬¦ä¸²çš„è¿­ä»£å™¨
-  è¿”å›å€¼ï¼š
-    ä¸‰å…ƒç»„ï¼š<å­—ç¬¦ä¸²æœ¬èº«ï¼Œç§ç±»ï¼Œè¡¨å†…ç >
+  ÊäÈë£º
+    ×Ö·û´®µÄµü´úÆ÷
+  ·µ»ØÖµ£º
+    ÈıÔª×é£º<×Ö·û´®±¾Éí£¬ÖÖÀà£¬±íÄÚÂë>
   */
   auto sub_program1(std::string::iterator &iter, std::string::iterator &end)
       -> std::pair<std::string, std::pair<std::string, int>>;
   /*
-  è¾“å…¥ï¼š
-    å­—ç¬¦ä¸²çš„è¿­ä»£å™¨
-  è¿”å›å€¼ï¼š
-    äºŒå…ƒç»„ï¼š<æ•°å­—ï¼Œå¸¸é‡è¡¨å†…ç ï¼ˆç­‰äº0æ—¶ä¸ºErrorï¼‰>
+  ÊäÈë£º
+    ×Ö·û´®µÄµü´úÆ÷
+  ·µ»ØÖµ£º
+    ¶şÔª×é£º<Êı×Ö£¬³£Á¿±íÄÚÂë£¨µÈÓÚ0Ê±ÎªError£©>
   */
   auto sub_program2(std::string::iterator &iter, std::string::iterator &end)
       -> std::pair<std::string, int>;
   /*
-  è¾“å…¥ï¼š
-    å­—ç¬¦ä¸²çš„è¿­ä»£å™¨
-  è¿”å›å€¼ï¼š
-    äºŒå…ƒç»„ï¼š<ç¬¦å·ï¼Œç§ç±»ï¼Œè¡¨å†…ç ï¼ˆç­‰äº0æ—¶ä¸ºErrorï¼‰>
+  ÊäÈë£º
+    ×Ö·û´®µÄµü´úÆ÷
+  ·µ»ØÖµ£º
+    ¶şÔª×é£º<·ûºÅ£¬ÖÖÀà£¬±íÄÚÂë£¨µÈÓÚ0Ê±ÎªError£©>
   */
   auto sub_program3(std::string::iterator &iter, std::string::iterator &end)
       -> std::pair<std::string, std::pair<std::string, int>>;
 
 public:
   Analyser() = default;
-  //è¯»kè¡¨
+  //¶Ák±í
   auto read_k(char const *p) -> void;
-  //è¯»pè¡¨
+  //¶Áp±í
   auto read_p(char const *p) -> void;
-  //è°ƒç”¨åˆ†æpè·¯å¾„æ–‡ä»¶çš„æ¥å£
+  //µ÷ÓÃ·ÖÎöpÂ·¾¶ÎÄ¼şµÄ½Ó¿Ú
   auto analyse(char const *p) -> void;
 };

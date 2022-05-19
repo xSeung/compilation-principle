@@ -11,6 +11,7 @@ auto main(int argc, char **argv) -> int {
   // a.analyse("debug");
   // a.analyse(argv[argc-1]);
   // std::cin.get();
-  // std::cout<<"鎴戠殑涓栫晫";
+  
+  std::cout<<"我的世界";
   return 0;
 }
