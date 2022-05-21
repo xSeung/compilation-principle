@@ -7,5 +7,6 @@
 auto main(int /*argc*/, char ** /*argv*/) -> int {
   std::string aa;
   int a = 1;
+  std::cout<<"";
   return 0;
 }
