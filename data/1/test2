@@ -1,0 +1,9 @@
+int main(){
+  char c;
+  scanf("%d",&a);
+  for(int i=0;i<3;i++)
+  {
+    printf("66.66.7");
+  }
+  return 0;
+}
