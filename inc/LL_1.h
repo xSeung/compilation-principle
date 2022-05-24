@@ -9,11 +9,11 @@ using CS = std::map<char, std::set<std::string>>;
 //
 class LL1 {
 private:
-  CS first;          // first¼¯
-  CS follow;         // follow¼¯
-  CS G;              // ÎÄ·¨
-  std::set<char> vt; // ÖÕ½á·û
-  std::set<char> vn; // ·ÇÖÕ½á·û
+  CS first;          // firsté›†
+  CS follow;         // followé›†
+  CS G;              // æ–‡æ³•
+  std::set<char> vt; // ç»ˆç»“ç¬¦
+  std::set<char> vn; // éžç»ˆç»“ç¬¦
 
 public:
   auto getfollow() -> void;

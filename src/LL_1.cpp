@@ -14,22 +14,23 @@
 auto LL1::reader(const std::string &path) noexcept(false) -> void {
   std::ifstream in(path);
   if (!in.is_open()) {
-    throw std::runtime_error(path + ":Â·¾¶´íÎó");
+    //æ–‡ä»¶æœªæ‰“å¼€åˆ™æŠ›å‡ºå¼‚å¸¸
+    throw std::runtime_error(path + ":è·¯å¾„é”™è¯¯\n");
   }
-  std::string line;   //ÎÄ¼şĞĞ
-  std::string temp;   //´æ·ÅÊ¶±ğµÄÍÆµ¼Ê½
-  std::set<char> all; //´æ·ÅËùÓĞÊ¶±ğµÄ×Ö·û
+  std::string line;   //æ–‡ä»¶è¡Œ
+  std::string temp;   //å­˜æ”¾è¯†åˆ«çš„æ¨å¯¼å¼
+  std::set<char> all; //å­˜æ”¾æ‰€æœ‰è¯†åˆ«çš„å­—ç¬¦
   char V{};
   while (!in.eof()) {
-    //ÖğĞĞ¶ÁÈ¡
+    //é€è¡Œè¯»å–
     std::getline(in, line);
-    // vÎªĞĞÊ××Ö·û Îª·ÇÖÕ½á·û
+    // vä¸ºè¡Œé¦–å­—ç¬¦ ä¸ºéç»ˆç»“ç¬¦
     V = line.at(0);
-    // V¼ÓÈë·ÇÖÕ½á·û±í
+    // VåŠ å…¥éç»ˆç»“ç¬¦è¡¨
     this->vn.insert(V);
-    // V¼ÓÈëÎÄ·¨×Öµä
+    // VåŠ å…¥æ–‡æ³•å­—å…¸
     this->G.insert({V, {}});
-    //·ÖÎöVµÄÍÆµ¼
+    //åˆ†æVçš„æ¨å¯¼
     for (auto iter = line.begin() + 3; iter < line.end(); iter++) {
       temp.push_back(*iter);
       all.insert(*iter);
@@ -42,9 +43,9 @@ auto LL1::reader(const std::string &path) noexcept(false) -> void {
       }
     }
   }
-  //È«×Ö·ûÖĞÉ¾³ı'|'
+  //å…¨å­—ç¬¦ä¸­åˆ é™¤'|'
   all.erase('|');
-  //ÖÕ½á·û¾ÍÊÇÈ«×Ö·ûÓë·ÇÖÕ½á·ûµÄ²î¼¯
+  //ç»ˆç»“ç¬¦å°±æ˜¯å…¨å­—ç¬¦ä¸éç»ˆç»“ç¬¦çš„å·®é›†
   std::set_difference(all.begin(), all.end(), this->vn.begin(), this->vn.end(),
                       std::inserter(this->vt, this->vt.begin()));
 }
