@@ -17,9 +17,9 @@ auto LL1::reader(const std::string &path) noexcept(false) -> void {
     //文件未打开则抛出异常
     throw std::runtime_error(path + ":路径错误\n");
   }
-  std::string line;   //文件行
-  std::string temp;   //存放识别的推导式
-  std::set<char> all; //存放所有识别的字符
+  std::string line; //文件行
+  std::string temp; //存放识别的推导式
+  // std::set<char> all; //存放所有识别的字符
   char V{};
   while (!in.eof()) {
     //逐行读取
@@ -33,21 +33,29 @@ auto LL1::reader(const std::string &path) noexcept(false) -> void {
     //分析V的推导
     for (auto iter = line.begin() + 3; iter < line.end(); iter++) {
       temp.push_back(*iter);
-      all.insert(*iter);
+      // all.insert(*iter);
       if (*iter == '|' || iter + 1 == line.end()) {
         if (*iter == '|') {
           temp.pop_back();
         }
-        this->G[V].insert(temp);
+        this->G.at(V).insert(temp);
+        // std::cout << temp << std::endl;
         temp.clear();
       }
     }
   }
-  //全字符中删除'|'
-  all.erase('|');
-  //终结符就是全字符与非终结符的差集
-  std::set_difference(all.begin(), all.end(), this->vn.begin(), this->vn.end(),
-                      std::inserter(this->vt, this->vt.begin()));
+  for (auto const &e : this->G.at('G')) {
+    std::cout << e << "  ";
+  }
+  // //全字符中删除'|'
+  // all.erase('|');
+  // //终结符就是全字符与非终结符的差集
+  // std::set_difference(all.begin(), all.end(), this->vn.begin(),
+  // this->vn.end(), std::inserter(this->vt, this->vt.begin()));
 }
 
-auto LL1::getfirst() -> void {}
+auto LL1::getfirst(char c) -> std::set<char> {
+  if (this->vn.count(c) == 0) {
+    return std::set<char>{c};
+  }
+}

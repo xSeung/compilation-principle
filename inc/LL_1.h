@@ -5,19 +5,23 @@
 #include <set>
 #include <string>
 //
-using CS = std::map<char, std::set<std::string>>;
-//
 class LL1 {
 private:
-  CS first;          // first集
-  CS follow;         // follow集
-  CS G;              // 文法
-  std::set<char> vt; // 终结符
+  std::map<char, std::set<char>> first;    // first集
+  std::map<char, std::set<char>> follow;   // follow集
+  std::map<char, std::set<std::string>> G; // 文法
+  // std::set<char> vt; // 终结符
   std::set<char> vn; // 非终结符
 
 public:
   auto getfollow() -> void;
-  auto getfirst() -> void;
+
+  auto getfirst(char c) -> std::set<char>;
+  /*
+  功能：从文件中读取文法
+  输入：文件路径
+  异常：抛出文件路径错误的异常
+   */
   auto reader(std::string const &path) noexcept(false) -> void;
 
   void test() {
