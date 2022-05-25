@@ -14,48 +14,131 @@
 auto LL1::reader(const std::string &path) noexcept(false) -> void {
   std::ifstream in(path);
   if (!in.is_open()) {
-    //æ–‡ä»¶æœªæ‰“å¼€åˆ™æŠ›å‡ºå¼‚å¸¸
-    throw std::runtime_error(path + ":è·¯å¾„é”™è¯¯\n");
+    //ÎÄ¼şÎ´´ò¿ªÔòÅ×³öÒì³£
+    throw std::runtime_error(path + ":Â·¾¶´íÎó\n");
   }
-  std::string line; //æ–‡ä»¶è¡Œ
-  std::string temp; //å­˜æ”¾è¯†åˆ«çš„æ¨å¯¼å¼
-  // std::set<char> all; //å­˜æ”¾æ‰€æœ‰è¯†åˆ«çš„å­—ç¬¦
+  std::string line; //ÎÄ¼şĞĞ
+  std::string temp; //´æ·ÅÊ¶±ğµÄÍÆµ¼Ê½
+  // std::set<char> all; //´æ·ÅËùÓĞÊ¶±ğµÄ×Ö·û
   char V{};
   while (!in.eof()) {
-    //é€è¡Œè¯»å–
+    //ÖğĞĞ¶ÁÈ¡
     std::getline(in, line);
-    // vä¸ºè¡Œé¦–å­—ç¬¦ ä¸ºéç»ˆç»“ç¬¦
+    if (this->s == 0) {
+      s = line.at(0);
+    }
+    // vÎªĞĞÊ××Ö·û Îª·ÇÖÕ½á·û
     V = line.at(0);
-    // VåŠ å…¥éç»ˆç»“ç¬¦è¡¨
+    // V¼ÓÈë·ÇÖÕ½á·û±í
     this->vn.insert(V);
-    // VåŠ å…¥æ–‡æ³•å­—å…¸
+    // V¼ÓÈëÎÄ·¨×Öµä
     this->G.insert({V, {}});
-    //åˆ†æVçš„æ¨å¯¼
+    //·ÖÎöVµÄÍÆµ¼
     for (auto iter = line.begin() + 3; iter < line.end(); iter++) {
       temp.push_back(*iter);
       // all.insert(*iter);
       if (*iter == '|' || iter + 1 == line.end()) {
+        //É¾³ıÍÆµ¼Ê½ÖĞµÄ'|'
         if (*iter == '|') {
           temp.pop_back();
         }
         this->G.at(V).insert(temp);
-        // std::cout << temp << std::endl;
         temp.clear();
       }
     }
   }
-  for (auto const &e : this->G.at('G')) {
-    std::cout << e << "  ";
-  }
-  // //å…¨å­—ç¬¦ä¸­åˆ é™¤'|'
+
+  // //È«×Ö·ûÖĞÉ¾³ı'|'
   // all.erase('|');
-  // //ç»ˆç»“ç¬¦å°±æ˜¯å…¨å­—ç¬¦ä¸éç»ˆç»“ç¬¦çš„å·®é›†
+  // //ÖÕ½á·û¾ÍÊÇÈ«×Ö·ûÓë·ÇÖÕ½á·ûµÄ²î¼¯
   // std::set_difference(all.begin(), all.end(), this->vn.begin(),
   // this->vn.end(), std::inserter(this->vt, this->vt.begin()));
 }
 
-auto LL1::getfirst(char c) -> std::set<char> {
+auto LL1::sub_getfirst(char c) -> std::set<char> {
   if (this->vn.count(c) == 0) {
-    return std::set<char>{c};
+    return {c};
   }
+  //Èôfirst¼¯´æÔÚcµÄË÷Òı£¬Ö±½Ó·µ»ØcµÄfirst¼¯
+  if (this->first.count(c) != 0) {
+    return this->first.at(c);
+  }
+  //ÉÏÊöÌõ¼ş²»³ÉÁ¢£¬ÔòÔÚfirst¼¯ÖĞ¼ÓÈëcµÄË÷Òı£¬¿ªÊ¼¶Ôc¹¹Ôìfirst¼¯
+  this->first.insert({c, {}});
+  std::set<char> temp;
+
+  //±éÀúcµÄÍÆµ¼Ê½E
+  for (auto const &E : this->G.at(c)) {
+    //±éÀúÍÆµ¼Ê½ÖĞµÄÃ¿¸ö×Ö·ûe
+    for (auto const &e : E) {
+      //Èç¹ûeÊÇÖÕ½á·û£¬Ö±½Ó½«Æä¼ÓÈëcµÄfirst¼¯
+      if (this->vn.count(e) == 0) {
+        this->first.at(c).insert(e);
+        break;
+      }
+      //·ñÔò£¬»ñÈ¡eµÄfirst¼¯
+      temp = this->sub_getfirst(e);
+      //µ±ÇÒ½öµ±eÎª²úÉúÊ½EµÄÎ²×Ö·ûÊ±£¬²»É¾³ı¿Õ×Ö@
+      if (E.find(e) != E.length() - 1) {
+        temp.erase('@');
+      }
+      //½«eµÄfirst¼¯²åÈëcµÄfirst¼¯
+      this->first.at(c).insert(temp.begin(), temp.end());
+      //Èç¹ûe²úÉúÊ½Ã»ÓĞ¿Õ×Ö@£¬ÔòÍË³ö´ËEµÄ·ÖÎö
+      if (this->G.at(e).count("@") == 0) {
+        break;
+      }
+    }
+  }
+  return this->first.at(c);
+}
+
+auto LL1::sub_getfollow(char A) -> std::set<char> {
+  // follow´æÔÚcµÄË÷Òı
+  if (this->follow.count(A) != 0) {
+    //Ö±½Ó·µ»ØcµÄfollow¼¯
+    return this->follow.at(A);
+  }
+  //´´½¨AµÄfollow¼¯
+  this->follow.insert({A, {}});
+  std::set<char> temp;
+  //±éÀúcµÄ²úÉúÊ½
+  for (auto const &E : this->G.at(A)) {
+
+    //±éÀú²úÉúÊ½µÄ×Ö·û
+    for (auto const &B : E) {
+      //Ìø¹ıÖÕ½á·û
+      if (this->vn.count(B) == 0) {
+        continue;
+      }
+      //Èç¹ûÂú×ãA->aB
+      this->sub_getfollow(B);
+      if (E.find(B) == E.length() - 1) {
+        // AµÄfollow²åÈëBµÄfollow
+        this->follow.at(B).insert(this->follow.at(A).begin(),
+                                  this->follow.at(A).end());
+        break;
+
+        // this->follow.insert(e, {});
+      }
+      //ÈôÂú×ãA->aBb
+      //»ñÈ¡bµÄfirst
+      temp = this->sub_getfirst(E.at(E.find(B) + 1));
+      //È¥³ı¿Õ×Ö@
+      temp.erase('@');
+      // bµÄfirst²åÈëBµÄfollow
+      this->follow.at(B).insert(temp.begin(), temp.end());
+      // bÎªÖÕ½á·û£¬½øÈëÏÂÒ»¸öÑ­»·
+      if (this->vn.count(E.at(E.find(B) + 1)) == 0) {
+        continue;
+      }
+      //Èç¹ûº¬ÓĞb->@
+      if (this->G.at(E.at(E.find(B) + 1)).count("@") != 0) {
+        // AµÄfollow²åÈëBµÄfollow
+        this->follow.at(B).insert(this->follow.at(A).begin(),
+                                  this->follow.at(A).end());
+      }
+    }
+  }
+  return this->follow.at(A);
 }

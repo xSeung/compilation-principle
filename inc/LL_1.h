@@ -7,20 +7,38 @@
 //
 class LL1 {
 private:
-  std::map<char, std::set<char>> first;    // firsté›†
-  std::map<char, std::set<char>> follow;   // followé›†
-  std::map<char, std::set<std::string>> G; // æ–‡æ³•
-  // std::set<char> vt; // ç»ˆç»“ç¬¦
-  std::set<char> vn; // éç»ˆç»“ç¬¦
+  char s{0};                               //ÎÄ·¨¿ªÊ¼·ûºÅ
+  std::map<char, std::set<char>> first;    // first¼¯
+  std::map<char, std::set<char>> follow;   // follow¼¯
+  std::map<char, std::set<std::string>> G; // ÎÄ·¨
+  // std::set<char> vt; // ÖÕ½á·û
+  std::set<char> vn; // ·ÇÖÕ½á·û
+  /*
+  ¹¦ÄÜ£º´Óc¿ªÊ¼ÏòÏÂ¼ÆËã¸÷·ÇÖÕ½á·ûµÄfirst¼¯
+  ÊäÈë£ºÎÄ·¨·ÇÖÕ½á·û
+  */
+  auto sub_getfirst(char c) -> std::set<char>;
+
+  auto sub_getfollow(char A) -> std::set<char>;
 
 public:
-  auto getfollow() -> void;
+  inline auto getfollow() -> void {
+    for (auto const &e : this->vn) {
+      this->follow.insert({e, {}});
+    }
+    this->follow.at(this->s).insert('#');
+  };
 
-  auto getfirst(char c) -> std::set<char>;
+  inline auto getfirst() -> void {
+
+    for (auto const &e : this->vn) {
+      this->sub_getfirst(e);
+    }
+  };
   /*
-  åŠŸèƒ½ï¼šä»æ–‡ä»¶ä¸­è¯»å–æ–‡æ³•
-  è¾“å…¥ï¼šæ–‡ä»¶è·¯å¾„
-  å¼‚å¸¸ï¼šæŠ›å‡ºæ–‡ä»¶è·¯å¾„é”™è¯¯çš„å¼‚å¸¸
+  ¹¦ÄÜ£º´ÓÎÄ¼şÖĞ¶ÁÈ¡ÎÄ·¨
+  ÊäÈë£ºÎÄ¼şÂ·¾¶
+  Òì³££ºÅ×³öÎÄ¼şÂ·¾¶´íÎóµÄÒì³£
    */
   auto reader(std::string const &path) noexcept(false) -> void;
 
