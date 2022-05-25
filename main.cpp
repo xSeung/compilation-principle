@@ -7,17 +7,20 @@
 #include <set>
 #include <string>
 
-auto main(int /*argc*/, char ** /*argv*/) -> int {
+auto main(int argc, char **argv) -> int {
   LL1 a;
   try {
-    a.reader("../../data/2/2.txt");
+    a.reader("../../data/2/1.txt");
   } catch (std::exception &e) {
     std::cout << e.what();
     std::exit(1);
   }
-  // a.test();
   a.getfirst();
   a.getfollow();
-  a.test();
+  a.table_creater();
+  a.tout();
+  std::string b(argv[argc - 1]);
+  a.analyse(b);
+  // a.output("std::string css", "std::string S", "std::string str", 1);
   return 0;
 }
