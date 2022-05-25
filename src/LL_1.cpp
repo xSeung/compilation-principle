@@ -50,5 +50,4 @@ auto LL1::reader(const std::string &path) noexcept(false) -> void {
                       std::inserter(this->vt, this->vt.begin()));
 }
 
-auto LL1::getfirst() -> void {
-}
+auto LL1::getfirst() -> void {}

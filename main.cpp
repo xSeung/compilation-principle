@@ -9,7 +9,7 @@
 auto main(int /*argc*/, char ** /*argv*/) -> int {
   LL1 a;
   try {
-    a.reader(R"(F:\Code\VSCode\by.c\data\2\1.txt)");
+    a.reader("../../data/2/1.txt");
 
   } catch (std::exception &e) {
     std::cout << e.what();
