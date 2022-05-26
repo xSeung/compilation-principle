@@ -10,7 +10,7 @@
 #include <set>
 #include <stdexcept>
 #include <string>
-#include <stack>
+
 
 auto LL1::reader(const std::string &path) noexcept(false) -> void {
   std::ifstream in(path);
