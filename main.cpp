@@ -4,7 +4,6 @@
 #include <exception>
 #include <iostream>
 #include <ostream>
-#include <set>
 #include <string>
 
 auto main(int argc, char **argv) -> int {
@@ -15,12 +14,13 @@ auto main(int argc, char **argv) -> int {
     std::cout << e.what();
     std::exit(1);
   }
+  //std::string aaa;
+  int cc{};
   a.getfirst();
   a.getfollow();
   a.table_creater();
   a.tout();
   std::string b(argv[argc - 1]);
   a.analyse(b);
-  // a.output("std::string css", "std::string S", "std::string str", 1);
   return 0;
 }
