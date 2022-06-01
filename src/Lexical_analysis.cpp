@@ -19,8 +19,8 @@ auto Analyser::is_character(char c) -> bool {
 }
 
 auto Analyser::readline(char const *p, std::string &str) -> bool {
-  if (!in.is_open()) {
-    in.open(p);
+  if (!this->in.is_open()) {
+    this->in.open(p);
     if (!this->in.is_open()) {
       throw std::runtime_error("\"" + std::string(p) + "\" not found");
     }

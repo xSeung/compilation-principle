@@ -11,7 +11,6 @@
 #include <stdexcept>
 #include <string>
 
-
 auto LL1::reader(const std::string &path) noexcept(false) -> void {
   std::ifstream in(path);
   if (!in.is_open()) {
@@ -185,9 +184,14 @@ auto LL1::table_creater() -> void {
 
 auto LL1::analyse(std::string &str) -> void {
   std::string S("#");
-  S.push_back(this->s);
   char temp{};
   int i = 0;
+
+  this->getfirst();
+  this->getfollow();
+  this->table_creater();
+  this->tout();
+  S.push_back(this->s);
   this->output("产生式", "符号栈", "输入串", i);
   this->output("", S, str, i++);
   while (true) {

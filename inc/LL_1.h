@@ -21,12 +21,15 @@ private:
   输入：文法非终结符
   */
   auto sub_getfirst(char c) -> std::set<char>;
-
   auto sub_getfollow(char A) -> std::set<char>;
   auto mulfirst(std::string const &str) -> std::set<char>;
-
-public:
   auto table_creater() -> void;
+  //输出分析过程逐步输出
+  void output(std::string const &css, std::string const &S,
+              std::string const &str, int i) const;
+  //输出分析表
+  auto tout() -> void;
+
   inline auto getfollow() -> void {
     for (auto const &e : this->vn) {
       this->follow.insert({e, {}});
@@ -61,14 +64,14 @@ public:
       this->sub_getfirst(e);
     }
   };
+
+public:
   /*
   功能：从文件中读取文法
   输入：文件路径
   异常：抛出文件路径错误的异常
    */
   auto reader(std::string const &path) noexcept(false) -> void;
-  auto tout() -> void;
-  void output(std::string const &css, std::string const &S,
-              std::string const &str, int i) const;
+  //分析调用的接口
   auto analyse(std::string &str) -> void;
 };
