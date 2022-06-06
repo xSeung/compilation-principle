@@ -25,6 +25,7 @@ private:
   std::map<int, std::string> g{{1, "E->E+T"}, {2, "E->T"},
                                {3, "T->T*F"}, {4, "T->F"},
                                {5, "F->(E)"}, {6, "F->i"}}; //产生式集合
+  
   std::vector<char> aStack;                                 //分析栈
   std::vector<int> sStack;                                  //状态栈
 

@@ -79,11 +79,11 @@ auto Analyser::sub_program1(std::string::iterator &iter,
   std::pair<std::string, int> p_;
 
   if ((pos = this->k.find(temp)) != this->k.end()) {
-    p_ = {"keword", pos->second};
+    p_ = {"关键字", pos->second};
   } else if ((pos = this->i.find(temp)) != this->i.end()) {
-    p_ = {"identifier", pos->second};
+    p_ = {"标识符", pos->second};
   } else {
-    p_ = {"identifier", this->i.size() + 1};
+    p_ = {"标识符", this->i.size() + 1};
     this->i.insert({temp, p_.second});
   }
   return {temp, {p_.first, p_.second}};
@@ -140,7 +140,7 @@ auto Analyser::sub_program3(std::string::iterator &iter,
       iter++;
     }
     if ((pos = this->arit.find(temp)) != this->arit.end()) {
-      return {temp, {"arithmetic operator", pos->second}};
+      return {temp, {"算术运算符", pos->second}};
     }
     return {temp, {"", 0}};
   }
@@ -151,13 +151,13 @@ auto Analyser::sub_program3(std::string::iterator &iter,
       iter++;
     }
     if ((pos = this->rela.find(temp)) != this->rela.end()) {
-      return {temp, {"relational operator", pos->second}};
+      return {temp, {"关系运算符", pos->second}};
     }
     return {temp, {"", 0}};
   }
   if ((pos = this->p.find(std::string(1, *iter))) != this->p.end()) {
     iter++;
-    return {pos->first, {"delimiter", pos->second}};
+    return {pos->first, {"界符", pos->second}};
   }
   char c = *iter;
   iter++;
@@ -193,21 +193,21 @@ auto Analyser::analyse(char const *p) -> void {
           auto s = this->sub_program2(iter, end);
           std::cout << std::left << std::setw(25) << s.first << std::setw(25)
                     << (s.second == 0
-                            ? "Error"
+                            ? "错误"
                             : std::string("(" + std::to_string(s.second) + "," +
                                           s.first + ")"))
-                    << std::setw(25) << (s.second == 0 ? "Error" : "constans")
+                    << std::setw(25) << (s.second == 0 ? "错误" : "常量")
                     << "(" << rows << "," << clumns << ")" << std::endl;
         } else {
           auto s = this->sub_program3(iter, end);
           std::cout << std::left << std::setw(25) << s.first << std::setw(25)
                     << (s.second.second == 0
-                            ? "Error"
+                            ? "错误"
                             : std::string("(" +
                                           std::to_string(s.second.second) +
                                           "," + s.first + ")"))
                     << std::setw(25)
-                    << (s.second.second == 0 ? "Error" : s.second.first) << "("
+                    << (s.second.second == 0 ? "错误" : s.second.first) << "("
                     << rows << "," << clumns << ")" << std::endl;
         }
         clumns++;

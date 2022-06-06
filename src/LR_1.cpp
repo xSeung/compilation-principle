@@ -7,11 +7,11 @@
 #include <vector>
 
 void LR1::init() {
-  std::ifstream in(R"(F:\Code\VSCode\BY.cpp\data\3\1.txt)");
+  std::ifstream in(R"(D:\Dev\VSCode\BY.cpp\data\1\k_table)");
   if (!in.is_open()) {
     std::exit(1);
   }
-  for (int i = 0; i < sNum; ++i) {
+  for (int i = 0; i < sNum; i++) {
     for (int j = 1; j <= tNum + nNum; ++j) {
       in >> table.at(i).at(j);
     }
