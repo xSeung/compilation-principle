@@ -7,7 +7,6 @@ class Analyser;
 
 class Analyser {
 private:
-  std::ifstream in;
   std::map<std::string, int> k;             //关键字表
   std::map<std::string, int> p;             //分界符表
   std::map<std::string, int> c;             //常量表

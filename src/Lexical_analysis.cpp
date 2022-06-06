@@ -17,50 +17,38 @@ auto Analyser::is_character(char c) -> bool {
   return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
 }
 
-auto Analyser::readline(char const *p, std::string &str) -> bool {
-  if (!this->in.is_open()) {
-    this->in.open(p);
-    if (!this->in.is_open()) {
-      throw std::runtime_error("\"" + std::string(p) + "\" not found");
-    }
-  }
-  if (this->in.eof()) {
-    return false;
-  }
-  std::getline(this->in, str);
-  return true;
-}
-
 auto Analyser::read_k(const char *p) -> void {
 
-  try {
-    std::string temp;
-    while (this->readline(p, temp)) {
-      std::regex r(R"(([a-z\*&]+)( *, *)(\d+))");
-      std::smatch sm;
-      std::regex_match(temp, sm, r);
-      this->k.insert({sm[1], std::stoi(sm[3])});
-    }
-  } catch (std::exception &e) {
-    std::cout << e.what() << std::endl;
+  std::string temp;
+  std::ifstream in(p);
+  if (!in.is_open()) {
+    throw std::runtime_error(std::string(p) + "：文件未打开");
   }
-  this->in.close();
+  while (!in.eof()) {
+    std::getline(in, temp);
+    std::regex r(R"(([a-z\*&]+)( *, *)(\d+))");
+    std::smatch sm;
+    std::regex_match(temp, sm, r);
+    this->k.insert({sm[1], std::stoi(sm[3])});
+  }
+  in.close();
 }
 
 auto Analyser::read_p(const char *p) -> void {
-  try {
-    std::string temp;
-    while (this->readline(p, temp)) {
-      std::regex r(R"((.)( *, *)(\d+))");
-      std::smatch sm;
-      std::regex_match(temp, sm, r);
-      this->p.insert({sm[1], std::stoi(sm[3])});
-    }
-
-  } catch (std::exception &e) {
-    std::cout << e.what() << std::endl;
+  std::ifstream in(p);
+  std::string temp;
+  if (!in.is_open()) {
+    throw std::runtime_error(std::string(p) + "：文件未打开");
   }
-  this->in.close();
+  while (!in.eof()) {
+    std::getline(in, temp);
+    std::regex r(R"((.)( *, *)(\d+))");
+    std::smatch sm;
+    std::regex_match(temp, sm, r);
+    this->p.insert({sm[1], std::stoi(sm[3])});
+  }
+
+  in.close();
 }
 
 auto Analyser::sub_program1(std::string::iterator &iter,
@@ -189,29 +177,30 @@ auto Analyser::analyse(char const *p) -> void {
   std::string::iterator iter;
   std::string::iterator end;
   std::cout.fill(' ');
-  try {
-    while (this->readline(p, line)) {
-      rows++;
-      iter = line.begin();
-      end = line.end();
-      while (iter != end) {
-        if (*iter == ' ') {
-          iter++;
-          continue;
-        }
-        if (this->is_character(*iter)) {
-          print(this->sub_program1(iter, end), rows, clumns);
-        } else if (this->is_number(*iter)) {
-          print(this->sub_program2(iter, end), rows, clumns);
-        } else {
-          print(this->sub_program3(iter, end), rows, clumns);
-        }
-        clumns++;
-      }
-      clumns = 1;
-    }
-  } catch (std::exception &e) {
-    std::cout << e.what();
+  std::ifstream in(p);
+  if (!in.is_open()) {
+    throw std::runtime_error(std::string(p) + "：文件未打开");
   }
-  this->in.close();
+  while (!in.eof()) {
+    std::getline(in, line);
+    rows++;
+    iter = line.begin();
+    end = line.end();
+    while (iter != end) {
+      if (*iter == ' ') {
+        iter++;
+        continue;
+      }
+      if (this->is_character(*iter)) {
+        print(this->sub_program1(iter, end), rows, clumns);
+      } else if (this->is_number(*iter)) {
+        print(this->sub_program2(iter, end), rows, clumns);
+      } else {
+        print(this->sub_program3(iter, end), rows, clumns);
+      }
+      clumns++;
+    }
+    clumns = 1;
+  }
+  in.close();
 }
