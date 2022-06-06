@@ -40,15 +40,15 @@ private:
   输入：
     字符串的迭代器
   返回值：
-    二元组：<数字，常量表内码（等于0时为Error）>
+    二元组：<数字，种类，常量表内码（等于0时为Error）>
   */
   auto sub_program2(std::string::iterator &iter, std::string::iterator &end)
-      -> std::pair<std::string, int>;
+      -> std::pair<std::string, std::pair<std::string, int>>;
   /*
   输入：
     字符串的迭代器
   返回值：
-    二元组：<符号，种类，表内码（等于0时为Error）>
+    三元组：<符号，种类，表内码（等于0时为Error）>
   */
   auto sub_program3(std::string::iterator &iter, std::string::iterator &end)
       -> std::pair<std::string, std::pair<std::string, int>>;

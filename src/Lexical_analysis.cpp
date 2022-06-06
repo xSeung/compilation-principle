@@ -12,7 +12,6 @@
 #include <string>
 #include <utility>
 
-// auto Analyser::fun() -> void {}
 auto Analyser::is_number(char c) -> bool { return (c >= '0' && c <= '9'); }
 auto Analyser::is_character(char c) -> bool {
   return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
@@ -91,7 +90,7 @@ auto Analyser::sub_program1(std::string::iterator &iter,
 //------------------------------------------
 auto Analyser::sub_program2(std::string::iterator &iter,
                             std::string::iterator &end)
-    -> std::pair<std::string, int> {
+    -> std::pair<std::string, std::pair<std::string, int>> {
   std::string temp;
   // char q = *iter;
   while (this->p.find(std::string(1, *iter)) == this->p.end() &&
@@ -117,7 +116,7 @@ auto Analyser::sub_program2(std::string::iterator &iter,
     }
   }
   if (error) {
-    return {temp, 0};
+    return {temp, {"³£Á¿", 0}};
   }
 
   if (pos != this->c.end()) {
@@ -126,8 +125,10 @@ auto Analyser::sub_program2(std::string::iterator &iter,
     this->c.insert({temp, this->c.size() + 1});
     id = static_cast<int>(this->c.size());
   }
-  return {temp, id};
-} //----------------------------------------
+  return {temp, {"³£Á¿", id}};
+}
+
+//----------------------------------------
 auto Analyser::sub_program3(std::string::iterator &iter,
                             std::string::iterator &end)
     -> std::pair<std::string, std::pair<std::string, int>> {
@@ -161,8 +162,25 @@ auto Analyser::sub_program3(std::string::iterator &iter,
   }
   char c = *iter;
   iter++;
-  return {std::string(1, c), {"", 0}};
+  return {std::string(1, c), {"½ç·û", 0}};
 }
+
+inline auto print(std::pair<std::string, std::pair<std::string, int>> const &s,
+                  int const &r, int const &l) -> void {
+  int const width = 25;
+  std::cout << std::left << std::setw(width) << s.first;
+  if (s.second.second == 0) {
+    std::cout << std::left << std::setw(width) << "´íÎó" << std::setw(width)
+              << "´íÎó";
+  } else {
+    auto temp = std::string("(" + std::to_string(s.second.second) + "," +
+                            s.first + ")");
+    std::cout << std::left << std::setw(width) << temp << std::setw(width)
+              << s.second.first;
+  }
+  std::cout << std::left << "(" << r << "," << l << ")" << std::endl;
+}
+
 //----------------------------------------
 auto Analyser::analyse(char const *p) -> void {
   std::string line;
@@ -182,33 +200,11 @@ auto Analyser::analyse(char const *p) -> void {
           continue;
         }
         if (this->is_character(*iter)) {
-          auto s = this->sub_program1(iter, end);
-
-          std::cout << std::left << std::setw(25) << s.first << std::setw(25)
-                    << std::string("(" + std::to_string(s.second.second) + "," +
-                                   s.first + ")")
-                    << std::setw(25) << s.second.first << "(" << rows << ","
-                    << clumns << ")" << std::endl;
+          print(this->sub_program1(iter, end), rows, clumns);
         } else if (this->is_number(*iter)) {
-          auto s = this->sub_program2(iter, end);
-          std::cout << std::left << std::setw(25) << s.first << std::setw(25)
-                    << (s.second == 0
-                            ? "´íÎó"
-                            : std::string("(" + std::to_string(s.second) + "," +
-                                          s.first + ")"))
-                    << std::setw(25) << (s.second == 0 ? "´íÎó" : "³£Á¿")
-                    << "(" << rows << "," << clumns << ")" << std::endl;
+          print(this->sub_program2(iter, end), rows, clumns);
         } else {
-          auto s = this->sub_program3(iter, end);
-          std::cout << std::left << std::setw(25) << s.first << std::setw(25)
-                    << (s.second.second == 0
-                            ? "´íÎó"
-                            : std::string("(" +
-                                          std::to_string(s.second.second) +
-                                          "," + s.first + ")"))
-                    << std::setw(25)
-                    << (s.second.second == 0 ? "´íÎó" : s.second.first) << "("
-                    << rows << "," << clumns << ")" << std::endl;
+          print(this->sub_program3(iter, end), rows, clumns);
         }
         clumns++;
       }
