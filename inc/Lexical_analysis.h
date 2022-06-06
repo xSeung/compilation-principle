@@ -1,8 +1,11 @@
 #pragma once
 #include <fstream>
+#include <iomanip>
+#include <iostream>
 #include <map>
 #include <string>
 #include <utility>
+
 class Analyser;
 
 class Analyser {
@@ -51,6 +54,22 @@ private:
   */
   auto sub_program3(std::string::iterator &iter, std::string::iterator &end)
       -> std::pair<std::string, std::pair<std::string, int>>;
+  inline auto
+  print(std::pair<std::string, std::pair<std::string, int>> const &s,
+        int const &r, int const &l) -> void {
+    int const width = 25;
+    std::cout << std::left << std::setw(width) << s.first;
+    if (s.second.second == 0) {
+      std::cout << std::left << std::setw(width) << "´íÎó" << std::setw(width)
+                << "´íÎó";
+    } else {
+      auto temp = std::string("(" + std::to_string(s.second.second) + "," +
+                              s.first + ")");
+      std::cout << std::left << std::setw(width) << temp << std::setw(width)
+                << s.second.first;
+    }
+    std::cout << std::left << "(" << r << "," << l << ")" << std::endl;
+  }
 
 public:
   Analyser() = default;

@@ -153,21 +153,7 @@ auto Analyser::sub_program3(std::string::iterator &iter,
   return {std::string(1, c), {"½ç·û", 0}};
 }
 
-inline auto print(std::pair<std::string, std::pair<std::string, int>> const &s,
-                  int const &r, int const &l) -> void {
-  int const width = 25;
-  std::cout << std::left << std::setw(width) << s.first;
-  if (s.second.second == 0) {
-    std::cout << std::left << std::setw(width) << "´íÎó" << std::setw(width)
-              << "´íÎó";
-  } else {
-    auto temp = std::string("(" + std::to_string(s.second.second) + "," +
-                            s.first + ")");
-    std::cout << std::left << std::setw(width) << temp << std::setw(width)
-              << s.second.first;
-  }
-  std::cout << std::left << "(" << r << "," << l << ")" << std::endl;
-}
+
 
 //----------------------------------------
 auto Analyser::analyse(char const *p) -> void {
@@ -192,11 +178,11 @@ auto Analyser::analyse(char const *p) -> void {
         continue;
       }
       if (this->is_character(*iter)) {
-        print(this->sub_program1(iter, end), rows, clumns);
+        this->print(this->sub_program1(iter, end), rows, clumns);
       } else if (this->is_number(*iter)) {
-        print(this->sub_program2(iter, end), rows, clumns);
+        this->print(this->sub_program2(iter, end), rows, clumns);
       } else {
-        print(this->sub_program3(iter, end), rows, clumns);
+        this->print(this->sub_program3(iter, end), rows, clumns);
       }
       clumns++;
     }
