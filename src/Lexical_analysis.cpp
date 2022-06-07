@@ -18,7 +18,6 @@ auto Analyser::is_character(char c) -> bool {
 }
 
 auto Analyser::read_k(const char *p) -> void {
-
   std::string temp;
   std::ifstream in(p);
   if (!in.is_open()) {
@@ -47,7 +46,6 @@ auto Analyser::read_p(const char *p) -> void {
     std::regex_match(temp, sm, r);
     this->p.insert({sm[1], std::stoi(sm[3])});
   }
-
   in.close();
 }
 
@@ -81,10 +79,9 @@ auto Analyser::sub_program2(std::string::iterator &iter,
     -> std::pair<std::string, std::pair<std::string, int>> {
   std::string temp;
   // char q = *iter;
-  while (this->p.find(std::string(1, *iter)) == this->p.end() &&
-         this->arit.find(std::string(1, *iter)) == this->arit.end() &&
-         this->rela.find(std::string(1, *iter)) == this->rela.end() &&
-         *iter != ' ' && *iter != '\"') {
+  while (this->p.count(std::string(1, *iter)) == 0 &&
+         this->arit.count(std::string(1, *iter)) == 0 &&
+         this->rela.count(std::string(1, *iter)) == 0 && *iter != ' ') {
     temp.push_back(*iter);
     if (++iter == end) {
       break;
@@ -153,8 +150,6 @@ auto Analyser::sub_program3(std::string::iterator &iter,
   return {std::string(1, c), {"界符", 0}};
 }
 
-
-
 //----------------------------------------
 auto Analyser::analyse(char const *p) -> void {
   std::string line;
@@ -162,7 +157,6 @@ auto Analyser::analyse(char const *p) -> void {
   int clumns = 1;
   std::string::iterator iter;
   std::string::iterator end;
-  std::cout.fill(' ');
   std::ifstream in(p);
   if (!in.is_open()) {
     throw std::runtime_error(std::string(p) + "：文件未打开");
@@ -176,6 +170,12 @@ auto Analyser::analyse(char const *p) -> void {
       if (*iter == ' ') {
         iter++;
         continue;
+      }
+      //用于跳过注释
+      if (*iter == '/' && iter + 1 != end) {
+        if (*(iter + 1) == '/') {
+          break;
+        }
       }
       if (this->is_character(*iter)) {
         this->print(this->sub_program1(iter, end), rows, clumns);

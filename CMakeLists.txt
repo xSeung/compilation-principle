@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.0)
 
 project(E1)
 
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/data/bin)
 # set(Boost_NO_WARN_NEW_VERSIONS ON)
 include_directories(${PROJECT_SOURCE_DIR}/inc)
 # set(CMAKE_GENERATOR "Visual Studio 17 2022")

@@ -34,7 +34,7 @@ private:
   输入：
     字符串的迭代器
   返回值：
-    三元组：<字符串本身，种类，表内码>
+    三元组：<符号，种类，表内码>
   */
   auto sub_program1(std::string::iterator &iter, std::string::iterator &end)
       -> std::pair<std::string, std::pair<std::string, int>>;
@@ -42,21 +42,21 @@ private:
   输入：
     字符串的迭代器
   返回值：
-    二元组：<数字，种类，常量表内码（等于0时为Error）>
+    三元组：<符号，种类，常量表内码（等于0时为Error）>
   */
   auto sub_program2(std::string::iterator &iter, std::string::iterator &end)
       -> std::pair<std::string, std::pair<std::string, int>>;
   /*
   输入：
     字符串的迭代器
-  返回值：
+  返回值： 
     三元组：<符号，种类，表内码（等于0时为Error）>
   */
   auto sub_program3(std::string::iterator &iter, std::string::iterator &end)
       -> std::pair<std::string, std::pair<std::string, int>>;
-  inline auto
-  print(std::pair<std::string, std::pair<std::string, int>> const &s,
-        int const &r, int const &l) -> void {
+  //打印三元组
+  auto print(std::pair<std::string, std::pair<std::string, int>> const &s,
+             int const &r, int const &l) -> void {
     int const width = 25;
     std::cout << std::left << std::setw(width) << s.first;
     if (s.second.second == 0) {

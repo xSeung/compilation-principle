@@ -19,13 +19,16 @@ auto main(int argc, char **argv) -> int {
 #ifdef LA
   Analyser a;
   try {
-    a.read_k(R"(D:\Dev\VSCode\BY.cpp\data\1\k_table)");
-    a.read_p(R"(D:\Dev\VSCode\BY.cpp\data\1\p_table)");
+    //è¯»å–Kè¡¨
+    a.read_k(R"(..\1\k_table)");
+    //è¯»å–Pè¡¨
+    a.read_p(R"(..\1\p_table)");
+    //åˆ†æ
+    a.analyse(argv[argc - 1]);
   } catch (std::exception const &e) {
     std::cout << e.what() << std::endl;
     std::quick_exit(1);
   }
-  a.analyse(argv[argc - 1]);
 #endif
 
 #ifdef LL_1
@@ -39,7 +42,7 @@ auto main(int argc, char **argv) -> int {
   }
   std::string b(argv[argc - 1]);
   if (b.back() != '#') {
-    std::cout << "·ÖÎö´®Ã»ÓĞÎ²ÖÃ#" << std::endl;
+    std::cout << "åˆ†æä¸²æ²¡æœ‰å°¾ç½®#" << std::endl;
     std::exit(-1);
   }
   a.analyse(b);
@@ -49,7 +52,7 @@ auto main(int argc, char **argv) -> int {
   LR1 a;
   a.init();
   std::string s(argv[argc - 1]);
-  std::cout << "ÊäÈëĞèÒª·ÖÎöµÄ×Ö·û´®£º";
+  std::cout << "è¾“å…¥éœ€è¦åˆ†æçš„å­—ç¬¦ä¸²ï¼š";
   s += '#';
   a.fun(s);
 #endif
