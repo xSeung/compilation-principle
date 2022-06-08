@@ -1,4 +1,3 @@
-#include <iterator>
 #define LA
 #ifdef LL_1
 #include "LL_1.h"
@@ -19,11 +18,11 @@ auto main(int argc, char **argv) -> int {
 #ifdef LA
   Analyser a;
   try {
-    //è¯»å–Kè¡¨
+    //¶ÁÈ¡K±í
     a.read_k(R"(..\1\k_table)");
-    //è¯»å–Pè¡¨
+    //¶ÁÈ¡P±í
     a.read_p(R"(..\1\p_table)");
-    //åˆ†æ
+    //·ÖÎö
     a.analyse(argv[argc - 1]);
   } catch (std::exception const &e) {
     std::cout << e.what() << std::endl;
@@ -35,16 +34,17 @@ auto main(int argc, char **argv) -> int {
   //#define LL_1
   LL1 a;
   try {
-    a.reader("../../data/2/1.txt");
+    a.reader("../2/1.txt");
   } catch (std::exception &e) {
     std::cout << e.what();
-    std::exit(-1);
+    std::quick_exit(1);
   }
   std::string b(argv[argc - 1]);
   if (b.back() != '#') {
-    std::cout << "åˆ†æä¸²æ²¡æœ‰å°¾ç½®#" << std::endl;
-    std::exit(-1);
+    std::cout << "·ÖÎö´®Ã»ÓĞÎ²ÖÃ#" << std::endl;
+    std::quick_exit(1);
   }
+
   a.analyse(b);
 #endif
 
@@ -52,10 +52,12 @@ auto main(int argc, char **argv) -> int {
   LR1 a;
   a.init();
   std::string s(argv[argc - 1]);
-  std::cout << "è¾“å…¥éœ€è¦åˆ†æçš„å­—ç¬¦ä¸²ï¼š";
+  std::cout << "ÊäÈëĞèÒª·ÖÎöµÄ×Ö·û´®£º";
   s += '#';
   a.fun(s);
 #endif
+
+  void *const p = nullptr;
 
   return 0;
 }

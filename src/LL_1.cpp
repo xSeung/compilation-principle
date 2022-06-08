@@ -4,6 +4,7 @@
 #include <exception>
 #include <fstream>
 #include <iomanip>
+#include <ios>
 #include <iostream>
 #include <iterator>
 #include <ostream>
@@ -191,6 +192,8 @@ auto LL1::analyse(std::string &str) -> void {
   this->getfollow();
   this->table_creater();
   this->tout();
+
+  std::cout << "\n\n开始分析字符串:" << std::endl;
   S.push_back(this->s);
   this->output("产生式", "符号栈", "输入串", i);
   this->output("", S, str, i++);
@@ -235,16 +238,22 @@ void LL1::output(std::string const &css, std::string const &S,
 }
 
 auto LL1::tout() -> void {
-  std::cout << std::setw(15) << " ";
+  std::cout << "-----------------------------------------------------分析表----"
+               "------------------------------------------------"
+            << std::endl;
+  std::cout << std::left << std::setw(15) << " ";
   for (auto const &e : this->vt) {
-    std::cout << std::setw(15) << e;
+    std::cout << std::left << std::setw(15) << e;
   }
-  std::cout << std::setw(15) << '#' << std::endl;
+  std::cout << std::left << std::setw(15) << '#' << std::endl;
   for (auto const &E : this->table) {
-    std::cout << std::setw(15) << E.first;
+    std::cout << std::left << std::setw(15) << E.first;
     for (auto const &e : E.second) {
-      std::cout << std::setw(15) << e.second;
+      std::cout << std::left << std::setw(15) << e.second;
     }
     std::cout << std::endl;
   }
+  std::cout << "---------------------------------------------------------------"
+               "------------------------------------------------"
+            << std::endl;
 }

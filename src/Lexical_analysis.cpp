@@ -100,6 +100,11 @@ auto Analyser::sub_program2(std::string::iterator &iter,
       break;
     }
   }
+  if (temp.size() > 1) {
+    if (temp.at(0) == '0' && temp.at(1) != '.') {
+      error = true;
+    }
+  }
   if (error) {
     return {temp, {"³£Á¿", 0}};
   }
