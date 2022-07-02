@@ -1,4 +1,5 @@
 #include "LR_1.h"
+#include <cstdlib>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -7,9 +8,9 @@
 #include <vector>
 
 void LR1::init() {
-  std::ifstream in(R"(D:\Dev\VSCode\BY.cpp\data\1\k_table)");
+  std::ifstream in(R"(D:\Dev\VSCode\BY.cpp\data\3\1.txt)");
   if (!in.is_open()) {
-    std::exit(1);
+    std::quick_exit(1);
   }
   for (int i = 0; i < sNum; i++) {
     for (int j = 1; j <= tNum + nNum; ++j) {
